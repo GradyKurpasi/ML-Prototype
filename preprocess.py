@@ -55,7 +55,7 @@ for index, row in master.iterrows():
     #print(output)
 
 #write to file and finish
-output.to_csv('output.csv', index=True)
+output.to_csv('output2.csv', index=True)
 print('DONE')
         
 
