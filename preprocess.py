@@ -15,6 +15,7 @@ payments = payments.sort_values(by=['customerid', 'accountid', 'DatePosted'])
 
 
 output = pd.DataFrame()
+record = 0
 
 for index, row in master.iterrows():
 
@@ -48,8 +49,8 @@ for index, row in master.iterrows():
     #output.append adds row to dataframe object output
     output = output.append(row.append(pay_hist), ignore_index=True)
     record += 1
-    print(record)
-    
+    if record % 100 == 0:   print(record)
+
     #DEBUG
     #print(output)
 
