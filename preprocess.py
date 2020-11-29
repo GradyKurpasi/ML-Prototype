@@ -21,8 +21,7 @@ for index, row in master.iterrows():
     #get current account data    
     account_id = row['accountid']
     customer_id = row['customerid']
-    account_year = row['dateplaced'].year
-    account_month  = row['dateplaced'].month
+
     
     #create blank payment history series
     pay_hist = pd.Series(dtype=object)
@@ -41,11 +40,22 @@ for index, row in master.iterrows():
         if (month >= 0) and (month <= 24): #only look at first 24 months
             pay_hist['Month'+ str(month)] += pay_row['Collected'] #update pay history (will automatically subtract NSF)
 
+    #calculate payment total and append to pay_hist
+    pay_hist = pay_hist.append(pd.Series({'paytotal' : pay_hist.sum()}))
+
     #create output row and add to output data frame
     #row.append adds columns to series object row
     #output.append adds row to dataframe object output
     output = output.append(row.append(pay_hist), ignore_index=True)
-    output.to_csv('output.csv', index=True)
+    record += 1
+    print(record)
+    
+    #DEBUG
+    #print(output)
+
+#write to file and finish
+output.to_csv('output.csv', index=True)
+print('DONE')
         
 
 
